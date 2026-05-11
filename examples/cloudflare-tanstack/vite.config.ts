@@ -4,4 +4,13 @@ import { defineConfig } from "vite";
 
 export default defineConfig({
   plugins: [tanstackStart(), viteReact()],
+  environments: {
+    ssr: {
+      build: {
+        rollupOptions: {
+          external: ["cloudflare:workers"],
+        },
+      },
+    },
+  },
 });

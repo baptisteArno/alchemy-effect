@@ -243,6 +243,7 @@
         "react-dom": "^19.2.4",
       },
       "devDependencies": {
+        "@cloudflare/workers-types": "catalog:",
         "@types/react": "^19.2.14",
         "@types/react-dom": "^19.2.3",
         "@vitejs/plugin-react": "^6.0.1",
@@ -299,7 +300,7 @@
     },
     "packages/alchemy": {
       "name": "alchemy",
-      "version": "2.0.0-beta.35",
+      "version": "2.0.0-beta.36",
       "bin": {
         "alchemy": "./bin/cli.js",
       },
@@ -394,7 +395,7 @@
     },
     "packages/better-auth": {
       "name": "@alchemy.run/better-auth",
-      "version": "2.0.0-beta.35",
+      "version": "2.0.0-beta.36",
       "dependencies": {
         "alchemy": "workspace:*",
         "better-auth": "catalog:",
@@ -403,7 +404,7 @@
     },
     "packages/pr-package": {
       "name": "@alchemy.run/pr-package",
-      "version": "2.0.0-beta.35",
+      "version": "2.0.0-beta.36",
       "dependencies": {
         "alchemy": "workspace:*",
         "effect": "catalog:",

@@ -11,6 +11,8 @@
 import { Route as rootRouteImport } from "./routes/__root";
 import { Route as IndexRouteImport } from "./routes/index";
 import { Route as ApiHelloRouteImport } from "./routes/api.hello";
+import { Route as ApiFilesIndexRouteImport } from "./routes/api.files.index";
+import { Route as ApiFilesKeyRouteImport } from "./routes/api.files.$key";
 
 const IndexRoute = IndexRouteImport.update({
   id: "/",
@@ -22,31 +24,49 @@ const ApiHelloRoute = ApiHelloRouteImport.update({
   path: "/api/hello",
   getParentRoute: () => rootRouteImport,
 } as any);
+const ApiFilesIndexRoute = ApiFilesIndexRouteImport.update({
+  id: "/api/files/",
+  path: "/api/files/",
+  getParentRoute: () => rootRouteImport,
+} as any);
+const ApiFilesKeyRoute = ApiFilesKeyRouteImport.update({
+  id: "/api/files/$key",
+  path: "/api/files/$key",
+  getParentRoute: () => rootRouteImport,
+} as any);
 
 export interface FileRoutesByFullPath {
   "/": typeof IndexRoute;
   "/api/hello": typeof ApiHelloRoute;
+  "/api/files/$key": typeof ApiFilesKeyRoute;
+  "/api/files/": typeof ApiFilesIndexRoute;
 }
 export interface FileRoutesByTo {
   "/": typeof IndexRoute;
   "/api/hello": typeof ApiHelloRoute;
+  "/api/files/$key": typeof ApiFilesKeyRoute;
+  "/api/files": typeof ApiFilesIndexRoute;
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport;
   "/": typeof IndexRoute;
   "/api/hello": typeof ApiHelloRoute;
+  "/api/files/$key": typeof ApiFilesKeyRoute;
+  "/api/files/": typeof ApiFilesIndexRoute;
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath;
-  fullPaths: "/" | "/api/hello";
+  fullPaths: "/" | "/api/hello" | "/api/files/$key" | "/api/files/";
   fileRoutesByTo: FileRoutesByTo;
-  to: "/" | "/api/hello";
-  id: "__root__" | "/" | "/api/hello";
+  to: "/" | "/api/hello" | "/api/files/$key" | "/api/files";
+  id: "__root__" | "/" | "/api/hello" | "/api/files/$key" | "/api/files/";
   fileRoutesById: FileRoutesById;
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute;
   ApiHelloRoute: typeof ApiHelloRoute;
+  ApiFilesKeyRoute: typeof ApiFilesKeyRoute;
+  ApiFilesIndexRoute: typeof ApiFilesIndexRoute;
 }
 
 declare module "@tanstack/react-router" {
@@ -65,12 +85,28 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof ApiHelloRouteImport;
       parentRoute: typeof rootRouteImport;
     };
+    "/api/files/": {
+      id: "/api/files/";
+      path: "/api/files";
+      fullPath: "/api/files/";
+      preLoaderRoute: typeof ApiFilesIndexRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/api/files/$key": {
+      id: "/api/files/$key";
+      path: "/api/files/$key";
+      fullPath: "/api/files/$key";
+      preLoaderRoute: typeof ApiFilesKeyRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ApiHelloRoute: ApiHelloRoute,
+  ApiFilesKeyRoute: ApiFilesKeyRoute,
+  ApiFilesIndexRoute: ApiFilesIndexRoute,
 };
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
